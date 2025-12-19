@@ -1,0 +1,485 @@
+.doctor-dashboard-container {
+  min-height: 100vh;
+  background: #f3f5fb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #1f2933;
+}
+
+/* Header */
+.dd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dd-logo .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-logo .logo-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.dd-logo .logo-text {
+  font-weight: 700;
+  font-size: 20px;
+  color: #2563eb;
+}
+
+.dd-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dd-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dd-avatar-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dd-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dd-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #2563eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.dd-user-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dd-user-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dd-user-role {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.dd-logout-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.dd-logout-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Main Layout */
+.dd-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr);
+  gap: 20px;
+  padding: 20px 32px 32px;
+}
+
+.dd-left,
+.dd-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Sections */
+.dd-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+.dd-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.dd-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+/* Stats */
+.dd-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.dd-stat-card {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.dd-stat-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dd-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Profile */
+.dd-profile-card {
+  padding-top: 6px;
+}
+
+.dd-profile-top {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.dd-profile-photo-big {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid #bfdbfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dd-profile-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dd-profile-photo-fallback {
+  width: 100%;
+  height: 100%;
+  background: #2563eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.dd-profile-info-main h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.dd-profile-info-main p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.dd-profile-hospital {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dd-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+  margin: 10px 0 12px;
+}
+
+.dd-profile-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.dd-profile-label {
+  font-size: 11px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dd-profile-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.dd-primary-btn {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.dd-primary-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* Quick Actions */
+.dd-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dd-action-btn {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease, border-color 0.2s;
+}
+
+.dd-action-primary {
+  background: #1e40af;
+  color: white;
+  border-color: #1e40af;
+}
+
+.dd-action-btn:hover {
+  transform: translateY(-1px);
+  background: #eef2ff;
+}
+
+/* Right column cards */
+.dd-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dd-appointment-card,
+.dd-patient-card {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  background: #f9fafb;
+}
+
+.dd-appointment-main h3,
+.dd-patient-main h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.dd-appointment-reason,
+.dd-patient-diagnosis {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.dd-appointment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.dd-appointment-mode {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  font-size: 11px;
+}
+
+.dd-appointment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.dd-status-chip {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.dd-status-confirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.dd-status-pending {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.dd-access-chip {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.dd-access-granted {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.dd-access-requested {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Patients */
+.dd-patient-last-visit {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 6px 0;
+}
+
+.dd-patient-view-btn {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dd-patient-view-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Links, loading, error */
+.dd-link-btn {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+.dd-loading,
+.dd-error,
+.dd-empty-text {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .dd-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .dd-header {
+    padding: 10px 16px;
+  }
+
+  .dd-main {
+    padding: 14px 16px 24px;
+  }
+
+  .dd-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.dd-edit-section {
+  display: flex;
+  align-items: center;
+  background: #f9faff;
+  border: 2px solid #e3e8ff;
+  padding: 18px 22px;
+  border-radius: 14px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s ease;
+  box-shadow: 0 3px 10px rgba(150, 160, 255, 0.1);
+}
+
+.dd-edit-section:hover {
+  background: #eef2ff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 14px rgba(120, 130, 255, 0.25);
+}
+
+.dd-edit-icon {
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+.dd-edit-text h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.dd-edit-text p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #666;
+}

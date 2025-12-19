@@ -1,0 +1,419 @@
+/* src/pages/PatientDashboard.css */
+
+.patient-dashboard-container {
+  min-height: 100vh;
+  background: #f5f7fb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #111827;
+}
+
+/* Top bar */
+.pd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.pd-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pd-logo-icon {
+  font-size: 22px;
+}
+
+.pd-logo-text {
+  font-weight: 700;
+  font-size: 20px;
+  color: #2563eb;
+}
+
+.pd-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pd-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pd-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.pd-user-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pd-user-role {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.pd-logout-btn {
+  border: none;
+  background: #f97373;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pd-logout-btn:hover {
+  background: #ef4444;
+}
+
+/* Main layout */
+.pd-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr);
+  gap: 24px;
+  padding: 24px 32px 32px;
+}
+
+@media (max-width: 900px) {
+  .pd-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Sections */
+.pd-section {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  margin-bottom: 18px;
+}
+
+.pd-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.pd-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pd-link-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.pd-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* Stats */
+.pd-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .pd-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pd-stat-card {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.pd-stat-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.pd-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Profile card */
+.pd-profile-card {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  padding: 12px 12px 14px;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pd-profile-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.pd-profile-label {
+  color: #6b7280;
+}
+
+.pd-profile-value {
+  font-weight: 500;
+}
+
+.pd-primary-btn {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.pd-primary-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Quick actions */
+.pd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pd-action-btn {
+  flex: 1;
+  min-width: 130px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.pd-action-primary {
+  background: #e0ecff;
+  border-color: #bfdbfe;
+}
+
+.pd-action-btn:hover {
+  background: #e5e7eb;
+}
+
+/* Cards list */
+.pd-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Appointment card */
+.pd-appointment-card {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  background: #f9fafb;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .pd-appointment-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pd-appointment-main h3 {
+  font-size: 14px;
+  margin: 0 0 2px;
+}
+
+.pd-appointment-spec {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.pd-appointment-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  gap: 2px;
+}
+
+.pd-appointment-mode {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  align-self: flex-start;
+}
+
+.pd-status-chip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  justify-self: flex-end;
+}
+
+.pd-status-confirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.pd-status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Record card */
+.pd-record-card {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  background: #f9fafb;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) auto auto;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .pd-record-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pd-record-main h3 {
+  font-size: 14px;
+  margin: 0 0 2px;
+}
+
+.pd-record-chip {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.pd-record-date {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.pd-record-view-btn {
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  justify-self: flex-end;
+}
+
+.pd-record-view-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Loading / error */
+.pd-loading,
+.pd-error,
+.pd-empty-text {
+  text-align: center;
+  padding: 40px 16px;
+  color: #6b7280;
+}
+.pd-access-card {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #fef9c3;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pd-access-main h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pd-access-note {
+  font-size: 13px;
+  color: #92400e;
+}
+
+.pd-access-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.pd-access-approve {
+  flex: 1;
+  background: #4ade80;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.pd-access-deny {
+  flex: 1;
+  background: #f87171;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}

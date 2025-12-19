@@ -1,0 +1,88 @@
+.da-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.da-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+}
+
+.da-section {
+  margin-bottom: 30px;
+}
+
+.da-section-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.da-empty {
+  background: #f8f9fb;
+  padding: 12px;
+  border-radius: 8px;
+  color: #666;
+}
+
+.da-card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.da-clickable:hover {
+  transform: translateY(-3px);
+  cursor: pointer;
+  background: #fafafa;
+}
+
+/* Header row inside card */
+.da-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.da-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Status badge */
+.da-status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.da-PENDING { background: #fff4e5; color: #b76b00; }
+.da-AWAITING_PATIENT_CONFIRMATION { background: #e5f0ff; color: #285fd4; }
+.da-CONFIRMED { background: #e5f9f0; color: #0f8a4b; }
+.da-CANCELLED { background: #ffe5e5; color: #c53030; }
+.da-COMPLETED { background: #eef0ff; color: #434190; }
+
+.da-complete-btn {
+  margin-top: 10px;
+  background: #0f8a4b;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.da-complete-btn:hover {
+  background: #0c6f3c;
+}

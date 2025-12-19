@@ -1,0 +1,78 @@
+.dad-container {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.dad-card {
+  width: 600px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.dad-title {
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.dad-section {
+  margin-bottom: 20px;
+}
+
+.dad-section-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dad-info-row {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.dad-time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.dad-time-slot {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.dad-time-slot.selected {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.dad-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.dad-accept-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dad-reject-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}

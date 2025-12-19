@@ -1,0 +1,64 @@
+.dr-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: "Inter", sans-serif;
+}
+
+.dr-summary-card {
+  background: #2563eb;
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.dr-average {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.dr-stars {
+  font-size: 28px;
+  margin-top: -6px;
+}
+
+.dr-total {
+  opacity: 0.9;
+}
+
+.dr-section-title {
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.dr-review-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.dr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dr-rating {
+  color: #fbbf24;
+  font-size: 20px;
+}
+
+.dr-date {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.dr-feedback {
+  margin-top: 10px;
+  color: #374151;
+}

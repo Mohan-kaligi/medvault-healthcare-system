@@ -1,0 +1,52 @@
+.dps-container {
+  max-width: 650px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+}
+
+.dps-container h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 15px;
+  display: block;
+}
+
+textarea, input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.dps-save-btn {
+  margin-top: 25px;
+  padding: 12px;
+  width: 100%;
+  background: #007bff;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dps-save-btn:hover {
+  background: #0056b3;
+}
+.dad-time-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  margin-top: 5px;
+}
