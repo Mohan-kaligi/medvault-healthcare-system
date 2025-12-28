@@ -2,7 +2,7 @@ package com.medvault.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -13,14 +13,19 @@ public class MedicalRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Owner (patient)
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
+    // File metadata
     private String title;
-    private String description;
-
     private String filePath;
+    private LocalDate uploadedDate;
+    @ManyToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
-    private LocalDateTime uploadedAt = LocalDateTime.now();
+    @Enumerated(EnumType.STRING)
+    private RecordCategory category;
 }

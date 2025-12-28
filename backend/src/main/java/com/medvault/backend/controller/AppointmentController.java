@@ -3,7 +3,7 @@ package com.medvault.backend.controller;
 import com.medvault.backend.model.*;
 import com.medvault.backend.repository.*;
 import org.springframework.web.bind.annotation.*;
-
+import com.medvault.backend.service.EmailService;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +15,24 @@ public class AppointmentController {
     private final AppointmentRepository appointmentRepo;
     private final PatientRepository patientRepo;
     private final DoctorRepository doctorRepo;
+    private final MedicalRecordRepository recordRepo;
+    private final EmailService emailService;
 
-    public AppointmentController(AppointmentRepository appointmentRepo,
-                                 PatientRepository patientRepo,
-                                 DoctorRepository doctorRepo) {
+    public AppointmentController(
+            AppointmentRepository appointmentRepo,
+            PatientRepository patientRepo,
+            DoctorRepository doctorRepo,
+            MedicalRecordRepository recordRepo,
+            EmailService emailService
+    ) {
         this.appointmentRepo = appointmentRepo;
         this.patientRepo = patientRepo;
         this.doctorRepo = doctorRepo;
+        this.recordRepo = recordRepo;
+        this.emailService = emailService;
     }
+
+
 
     // -----------------------------------------------------
     // 0️⃣ Extra endpoint to fix frontend: /by-id/{id}
@@ -116,7 +126,28 @@ public class AppointmentController {
         if ("CONFIRM".equalsIgnoreCase(action)) {
             a.setStatus(AppointmentStatus.CONFIRMED);
             a.setAccessStatus(RecordAccessStatus.GRANTED);
+
+            // ---------------- SEND EMAILS ----------------
+
+            emailService.sendPatientAppointmentConfirmation(
+                    a.getPatient().getUser().getEmail(),
+                    a.getPatient().getUser().getFullName(),
+                    a.getDoctor().getUser().getFullName(),
+                    a.getDoctor().getUser().getEmail(),
+                    a.getDoctor().getUser().getPhone(),
+                    a.getAppointmentDate().toString(),
+                    a.getFinalConsultationTime()
+            );
+
+            emailService.sendDoctorAccessGranted(
+                    a.getDoctor().getUser().getEmail(),
+                    a.getDoctor().getUser().getFullName(),
+                    a.getPatient().getUser().getFullName(),
+                    a.getAppointmentDate().toString(),
+                    a.getFinalConsultationTime()
+            );
         }
+
         else if ("DENY".equalsIgnoreCase(action)) {
             a.setStatus(AppointmentStatus.CANCELLED);
             a.setAccessStatus(RecordAccessStatus.DENIED);
@@ -138,9 +169,22 @@ public class AppointmentController {
             throw new RuntimeException("Only confirmed appointments can be completed.");
         }
 
+        // 🔒 CHECK: Prescription must exist
+        boolean hasPrescription =
+                recordRepo.existsByAppointment_IdAndCategory(
+                        id, RecordCategory.PRESCRIPTION
+                );
+
+        if (!hasPrescription) {
+            throw new RuntimeException(
+                    "Please upload prescription before marking appointment completed."
+            );
+        }
+
         a.setStatus(AppointmentStatus.COMPLETED);
         return appointmentRepo.save(a);
     }
+
 
     // -----------------------------------------------------
     // 5️⃣ PATIENT SUBMITS FEEDBACK

@@ -1,4 +1,5 @@
 package com.medvault.backend.controller;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medvault.backend.model.*;
@@ -6,10 +7,19 @@ import com.medvault.backend.repository.*;
 import com.medvault.backend.service.FileStorageService;
 import com.medvault.backend.model.PasswordResetToken;
 import com.medvault.backend.repository.PasswordResetTokenRepository;
+import com.medvault.backend.model.PasswordResetToken;
+import com.medvault.backend.model.User;
+import com.medvault.backend.repository.PasswordResetTokenRepository;
+import com.medvault.backend.repository.UserRepository;
+import com.medvault.backend.service.MailService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +35,8 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     private PatientRepository patientRepository;
 
@@ -35,9 +47,20 @@ public class AuthController {
     private FileStorageService fileStorageService;
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
-
+    private final PasswordResetTokenRepository tokenRepository;
+    private final MailService mailService;
     private final ObjectMapper mapper = new ObjectMapper();
-
+    public AuthController(
+            UserRepository userRepository,
+            PasswordResetTokenRepository tokenRepository,
+            MailService mailService,
+            PasswordEncoder passwordEncoder
+    ) {
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+        this.mailService = mailService;
+        this.passwordEncoder = passwordEncoder;
+    }
     // -------------------------------------------------------------
     // PATIENT REGISTRATION
     // -------------------------------------------------------------
@@ -193,6 +216,74 @@ public class AuthController {
 
         return Map.of("message", "Password successfully updated");
     }
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> body) {
+
+        String email = body.get("email");
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // ✅ SAFE: remove old token if exists
+        passwordResetTokenRepository
+                .findByUser_Id(user.getId())
+                .ifPresent(passwordResetTokenRepository::delete);
+
+        PasswordResetToken token = new PasswordResetToken();
+        token.setToken(UUID.randomUUID().toString());
+        token.setUser(user);
+        token.setExpiry(LocalDateTime.now().plusMinutes(30));
+
+        passwordResetTokenRepository.save(token);
+
+        String resetLink =
+                "http://localhost:3000/reset-password?token=" + token.getToken();
+
+        String msg =
+                "Hello " + user.getFullName() + ",\n\n" +
+                        "Click the link below to reset your password:\n\n" +
+                        resetLink + "\n\n" +
+                        "This link will expire in 30 minutes.";
+
+        mailService.sendEmail(user.getEmail(), "Reset Password", msg);
+
+        return ResponseEntity.ok(
+                Map.of("message", "Please check your email for password reset instructions.")
+        );
+    }
+
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> body) {
+
+        String tokenStr = body.get("token");
+        String newPassword = body.get("newPassword");
+
+        PasswordResetToken token = passwordResetTokenRepository
+                .findByToken(tokenStr)
+                .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+
+        if (token.getExpiry().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token expired");
+        }
+
+        User user = token.getUser();
+
+        // ✅ ENCODE PASSWORD
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setEnabled(true);
+        user.setFirstLogin(false);
+
+        userRepository.save(user);
+
+        // ✅ delete token after use
+        passwordResetTokenRepository.delete(token);
+
+        return ResponseEntity.ok(
+                Map.of("message", "Password updated successfully")
+        );
+    }
+
 
 
 }

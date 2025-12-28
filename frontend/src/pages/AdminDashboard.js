@@ -7,8 +7,14 @@ import logo from "../assets/logo.png";
 
 const API = "http://localhost:8080/api/admin";
 
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+  patients: 0,
+  doctors: 0,
+  appointments: 0,
+});
 
   const [pending, setPending] = useState([]);
   const [approved, setApproved] = useState([]);
@@ -19,20 +25,25 @@ export default function AdminDashboard() {
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [confirmedAppointments, setConfirmedAppointments] = useState([]);
 
 
   // Fetch all lists
   const loadData = async () => {
     try {
-      const [p, a, r] = await Promise.all([
+      const [p, a, r, c, s] = await Promise.all([
         axios.get(API + "/doctors/pending"),
         axios.get(API + "/doctors/approved"),
         axios.get(API + "/doctors/rejected"),
+        axios.get(API + "/appointments/completed"), // NEW
+        axios.get(API + "/stats"),
       ]);
 
       setPending(p.data);
       setApproved(a.data);
       setRejected(r.data);
+      setConfirmedAppointments(c.data); // NEW
+      setStats(s.data);
     } catch (err) {
       alert("Failed to load admin dashboard");
     }
@@ -146,6 +157,23 @@ export default function AdminDashboard() {
 
         </div>
       </nav>
+    {/* ================= ADMIN OVERVIEW STATS ================= */}
+<section className="admin-stats">
+  <div className="stat-card stat-accepted">
+    <h3>Total Patients</h3>
+    <p className="stat-count">{stats.patients}</p>
+  </div>
+
+  <div className="stat-card stat-pending">
+    <h3>Total Doctors</h3>
+    <p className="stat-count">{stats.doctors}</p>
+  </div>
+
+  <div className="stat-card stat-rejected">
+    <h3>Total Appointments</h3>
+    <p className="stat-count">{stats.appointments}</p>
+  </div>
+</section>
 
       {/* HEADER */}
       <div className="admin-main">
@@ -324,6 +352,33 @@ export default function AdminDashboard() {
           </div>
         </section>
       </div>
+      {/* ---------------- CONFIRMED APPOINTMENTS (READ-ONLY) ---------------- */}
+<section className="requests-section accepted-section">
+  <div className="section-header">
+    <h2>🔒 Completed Appointments</h2>
+    <span className="section-count">{confirmedAppointments.length}</span>
+  </div>
+
+  <div className="requests-container">
+    {confirmedAppointments.map((appt) => (
+      <div key={appt.id} className="request-card">
+        <h3>{appt.patient?.user?.fullName}</h3>
+
+        <p><strong>Patient Email:</strong> {appt.patient?.user?.email}</p>
+
+        <p><strong>Doctor:</strong> {appt.doctor?.user?.fullName}</p>
+        <p><strong>Specialization:</strong> {appt.doctor?.specialization}</p>
+
+        <p><strong>Date:</strong> {appt.appointmentDate}</p>
+        <p><strong>Time:</strong> {appt.finalConsultationTime}</p>
+        <p><strong>Mode:</strong> {appt.mode}</p>
+
+        <span className="status-chip confirmed">CONFIRMED</span>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       {/* FOOTER */}
       <footer className="admin-footer">

@@ -9,6 +9,30 @@ export default function PatientAppointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const handleViewPrescription = async (appointmentId) => {
+  try {
+    const res = await axios.get(
+      `http://localhost:8080/api/records/appointment/${appointmentId}`
+    );
+
+    if (!res.data || res.data.length === 0) {
+      alert("No prescription found.");
+      return;
+    }
+
+    // assuming one prescription per appointment
+    const record = res.data[0];
+
+    const fileUrl = record.filePath.startsWith("/")
+      ? `http://localhost:8080${record.filePath}`
+      : `http://localhost:8080/${record.filePath}`;
+
+    window.open(fileUrl, "_blank");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load prescription.");
+  }
+};
 
   useEffect(() => {
     const loadAppointments = async () => {
@@ -230,6 +254,13 @@ export default function PatientAppointments() {
     <strong>Your Feedback:</strong>{" "}
     {appt.feedbackText || "No feedback given yet"}
   </p>
+  
+           <button
+  className="pa-btn feedback-btn"
+  onClick={() => handleViewPrescription(appt.id)}
+>
+  View Prescription
+</button>
 
   {/* ⭐ New Feedback Button ⭐ */}
   {!appt.feedbackText && (
@@ -239,6 +270,7 @@ export default function PatientAppointments() {
     >
       Give Feedback
     </button>
+    
   )}
 </div>
 

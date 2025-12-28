@@ -30,7 +30,9 @@ export default function DoctorAppointments() {
 
   const handleComplete = async (id) => {
     try {
-      await axios.post(`http://localhost:8080/api/appointments/${id}/complete`);
+      await axios.post(
+        `http://localhost:8080/api/appointments/${id}/complete`
+      );
 
       setAppointments((prev) =>
         prev.map((a) =>
@@ -39,8 +41,8 @@ export default function DoctorAppointments() {
       );
 
       alert("Marked as completed.");
-    } catch (err) {
-      alert("Failed to mark completed.");
+    } catch {
+      alert("!Dear Doctor, You need to add the PrescriptionFirst Then Mark as Completed");
     }
   };
 
@@ -60,7 +62,6 @@ export default function DoctorAppointments() {
     <div className="da-container">
       <h2 className="da-title">All Appointments</h2>
 
-      {/* ------- Pending Requests ------- */}
       <AppointmentSection
         title="New Requests (Pending)"
         items={grouped.pending}
@@ -69,23 +70,22 @@ export default function DoctorAppointments() {
         navigate={navigate}
       />
 
-      {/* ------- Awaiting Patient Confirmation ------- */}
       <AppointmentSection
         title="Awaiting Patient Confirmation"
         items={grouped.waiting}
         emptyText="None waiting."
       />
 
-      {/* ------- Confirmed ------- */}
       <AppointmentSection
         title="Confirmed Appointments"
         items={grouped.confirmed}
         emptyText="No confirmed appointments."
         showComplete
+        showViewRecords
         onComplete={handleComplete}
+        navigate={navigate}
       />
 
-      {/* ------- Completed ------- */}
       <AppointmentSection
         title="Completed"
         items={grouped.completed}
@@ -93,7 +93,6 @@ export default function DoctorAppointments() {
         showFeedback
       />
 
-      {/* ------- Cancelled ------- */}
       <AppointmentSection
         title="Cancelled"
         items={grouped.cancelled}
@@ -103,7 +102,7 @@ export default function DoctorAppointments() {
   );
 }
 
-// ------------------- REUSABLE COMPONENT ------------------- //
+// ----------------------------------------------------
 
 function AppointmentSection({
   title,
@@ -114,6 +113,7 @@ function AppointmentSection({
   showComplete,
   onComplete,
   showFeedback,
+  showViewRecords,
 }) {
   return (
     <section className="da-section">
@@ -146,21 +146,47 @@ function AppointmentSection({
             {showFeedback && (
               <p>
                 <strong>Feedback:</strong>{" "}
-                {a.feedbackText ? a.feedbackText : "No feedback yet"}
+                {a.feedbackText || "No feedback yet"}
               </p>
             )}
 
-            {showComplete && (
-              <button
+            {showComplete && a.status === "CONFIRMED" && (
+  <div className="da-actions-row">
+    <button
                 className="da-complete-btn"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onComplete(a.id);
+                  navigate(`/doctor/patient/${a.patient.id}/records`);
                 }}
               >
-                Mark Completed
+                View Patient Records
               </button>
-            )}
+
+    <button
+      className="da-complete-btn"
+      onClick={(e) => {
+        e.stopPropagation();
+        navigate(`/doctor/appointments/${a.id}/prescription`);
+      }}
+    >
+      Add Prescription
+    </button>
+
+    <button
+  className="da-complete-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    onComplete(a.id);   // ✅ CALL API
+  }}
+>
+  Mark Completed
+</button>
+
+
+    
+  </div>
+)}
+
           </div>
         ))
       )}

@@ -15,4 +15,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     // 👇 ADD THIS METHOD (fixes your error)
     boolean existsByPatient_IdAndDoctor_IdAndStatus(Long patientId, Long doctorId, AppointmentStatus status);
+    List<Appointment> findByStatus(AppointmentStatus status);
 }

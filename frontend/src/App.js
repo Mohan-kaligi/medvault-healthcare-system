@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DoctorAppointmentDetail from "./pages/DoctorAppointmentDetails";
 import GiveFeedback from "./pages/GiveFeedback";
 import DoctorRatings from "./pages/DoctorRatings";
-
+import PatientRecords from "./pages/PatientRecords";
+import DoctorAddPrescription from "./pages/DoctorAddPrescription";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Home from "./Home";
 import SetPassword from "./pages/SetPassword";
 import BookAppointment from "./pages/BookAppointment";
@@ -14,6 +17,7 @@ import DoctorRegister from "./pages/DoctorRegister";
 import PatientAppointments from "./pages/PatientAppointments";
 import DoctorAppointments from "./pages/DoctorAppointments";
 import DoctorAppointmentDetails from "./pages/DoctorAppointmentDetails";
+import DoctorPatientRecords from "./pages/DoctorPatientRecords";
 
 import PatientDashboard from "./pages/PatientDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
@@ -60,6 +64,17 @@ function App() {
 <Route path="/doctor/appointments/:id" element={<DoctorAppointmentDetails />} />
 <Route path="/patient/appointments/:id/feedback" element={<GiveFeedback />} />
 <Route path="/doctor/ratings" element={<DoctorRatings />} />
+<Route path="/patient/records" element={<PatientRecords />} />
+<Route
+  path="/doctor/patient/:patientId/records"
+  element={<DoctorPatientRecords />}
+/>
+<Route
+  path="/doctor/appointments/:id/prescription"
+  element={<DoctorAddPrescription />}
+/>
+<Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password" element={<ResetPassword />} />
 
       </Routes>
     </Router>

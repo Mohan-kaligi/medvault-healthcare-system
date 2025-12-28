@@ -81,6 +81,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s;
+  margin-left: 10px;
 }
 
 .da-complete-btn:hover {

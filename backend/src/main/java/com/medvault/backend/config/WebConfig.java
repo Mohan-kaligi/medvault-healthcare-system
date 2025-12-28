@@ -5,15 +5,14 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        // Serve doctor uploads folder
+        // Serve ALL uploads (doctors + records)
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:///C:/medvault/uploads/")
                 .setCachePeriod(0);
-
     }
 }

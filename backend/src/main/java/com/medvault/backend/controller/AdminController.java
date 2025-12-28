@@ -13,6 +13,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.medvault.backend.model.Appointment;
+import com.medvault.backend.model.AppointmentStatus;
+import com.medvault.backend.repository.AppointmentRepository;
+import com.medvault.backend.repository.PatientRepository;
+import com.medvault.backend.repository.AppointmentRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,6 +32,14 @@ public class AdminController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
+
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -125,4 +138,24 @@ public class AdminController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + type + "\"")
                 .body(file);
     }
+    @GetMapping("/appointments/completed")
+    public List<Appointment> getCompletedAppointments() {
+        return appointmentRepository.findByStatus(AppointmentStatus.COMPLETED);
+    }
+    @GetMapping("/stats")
+    public Map<String, Long> getAdminStats() {
+
+        long totalPatients = patientRepository.count();
+        long totalDoctors = doctorRepository.count();
+        long totalAppointments = appointmentRepository.count();
+
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("patients", totalPatients);
+        stats.put("doctors", totalDoctors);
+        stats.put("appointments", totalAppointments);
+
+        return stats;
+    }
+
+
 }

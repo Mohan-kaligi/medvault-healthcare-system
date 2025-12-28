@@ -12,11 +12,12 @@ const PatientDashboard = () => {
   const [stats, setStats] = useState({
     totalAppointments: 0,
     upcomingAppointments: 0,
-    recordsCount: 18, // still mock for now
+    recordsCount: 0, 
   });
 
   const [appointments, setAppointments] = useState([]);
-  const [recentRecords, setRecentRecords] = useState([]); // mock records
+  const [recentRecords, setRecentRecords] = useState([]); 
+  const [totalRecords, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -59,26 +60,31 @@ const PatientDashboard = () => {
         });
 
         // 4️⃣ Mock recent records (unchanged)
-        setRecentRecords([
-          {
-            id: 101,
-            title: "Blood Test Report",
-            category: "TEST_REPORT",
-            date: "2025-11-20",
-          },
-          {
-            id: 102,
-            title: "Dermatology Prescription",
-            category: "PRESCRIPTION",
-            date: "2025-11-15",
-          },
-          {
-            id: 103,
-            title: "X-Ray Scan Report",
-            category: "SCAN",
-            date: "2025-11-07",
-          },
-        ]);
+        const recordRes = await axios.get(
+          `http://localhost:8080/api/records/patient/${id}`
+        );
+        const allRecords = recordRes.data || [];
+
+        setTotalRecords(allRecords.length);
+
+        const latestThree = allRecords
+          .sort(
+            (a, b) =>
+              new Date(b.uploadedDate) - new Date(a.uploadedDate)
+          )
+          .slice(0, 3);
+
+        setRecentRecords(latestThree);
+
+        setStats({
+          totalAppointments: appts.length,
+          upcomingAppointments: appts.filter(
+            (a) =>
+              a.status !== "CANCELLED" &&
+              a.status !== "COMPLETED"
+          ).length,
+          recordsCount: allRecords.length,
+        });
       } catch (err) {
         console.error(err);
         setError("Failed to load dashboard data.");
@@ -286,7 +292,7 @@ const PatientDashboard = () => {
                 className="pd-action-btn"
                 onClick={() => navigate("/patient/records")}
               >
-                📂 Add Medical Record
+                📂 View & Add Medical Record
               </button>
 
               <button
@@ -333,7 +339,7 @@ const PatientDashboard = () => {
                     <div className="pd-access-actions">
                       <button
                         className="pd-access-approve"
-                        onClick={() => handleApproveAccess(appt.id)}
+                        onClick={() =>  navigate("/patient/appointments")}
                       >
                         Approve Access & Accept Appointment
                       </button>
@@ -400,32 +406,53 @@ const PatientDashboard = () => {
 
           {/* RECENT MEDICAL RECORDS */}
           <div className="pd-section">
-            <div className="pd-section-header">
-              <h2 className="pd-section-title">
-                Recent Medical Records
-              </h2>
-            </div>
+            <h2 className="pd-section-title">Recent Medical Records</h2>
 
-            <div className="pd-card-list">
-              {recentRecords.map((rec) => (
-                <div key={rec.id} className="pd-record-card">
-                  <div className="pd-record-main">
-                    <h3>{rec.title}</h3>
-                    <span className="pd-record-chip">
-                      {rec.category.replace("_", " ")}
-                    </span>
-                  </div>
-                  <p className="pd-record-date">{rec.date}</p>
+            {recentRecords.length === 0 ? (
+              <p className="pd-empty-text">No medical records found.</p>
+            ) : (
+              <>
+                <div className="pd-card-list">
+                  {recentRecords.map((rec) => {
+                    const fileUrl = rec.filePath.startsWith("/")
+                      ? `http://localhost:8080${rec.filePath}`
+                      : `http://localhost:8080/${rec.filePath}`;
 
+                    return (
+                      <div key={rec.id} className="pd-record-card">
+                        <div className="pd-record-main">
+                          <h3>{rec.title}</h3>
+                          <span className="pd-record-chip">
+                            {rec.category.replace("_", " ")}
+                          </span>
+                        </div>
+                        <p className="pd-record-date">
+                          {rec.uploadedDate}
+                        </p>
+
+                        <a
+                          href={fileUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="pd-record-view-btn"
+                        >
+                          Open
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
+                {totalRecords > 3 && (
                   <button
                     className="pd-record-view-btn"
+                    style={{ marginTop: "10px" }}
                     onClick={() => navigate("/patient/records")}
                   >
-                    Open
+                    View More
                   </button>
-                </div>
-              ))}
-            </div>
+                )}
+              </>
+            )}
           </div>
         </section>
       </main>

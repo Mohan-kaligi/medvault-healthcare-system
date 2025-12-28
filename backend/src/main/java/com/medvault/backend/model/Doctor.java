@@ -15,6 +15,8 @@ public class Doctor {
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(nullable = false)
+    private boolean active = true; // NEW FIELD
 
     private String specialization;
     private int experienceYears;

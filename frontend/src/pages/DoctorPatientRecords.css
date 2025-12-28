@@ -1,0 +1,48 @@
+.dr-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.dr-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.dr-chip {
+  display: inline-block;
+  background: #e6f0ff;
+  color: #285fd4;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin: 6px 0;
+}
+
+.dr-date {
+  color: #666;
+  font-size: 14px;
+}
+
+.dr-open-btn {
+  display: inline-block;
+  margin-top: 8px;
+  background: #285fd4;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.dr-back-btn {
+  margin-top: 20px;
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}

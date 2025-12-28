@@ -90,6 +90,11 @@ export default function Login() {
           <p className="switch-text">
             New User? <a href="/patient/register">Register here</a>
           </p>
+          <p className="switch-text">
+            Forgot Password ?<a href="/forgot-password">Click Here</a>
+          </p>
+          
+
         </form>
       </div>
     </div>
